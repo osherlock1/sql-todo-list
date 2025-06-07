@@ -61,6 +61,11 @@ class TaskMaster:
         print(f"Task {task_id} was deleted sucessfully!")
         self.connection.commit()
 
+        #Delete task from list
+        for task in self.tasks:
+            if task.task_id == task_id:
+                self.tasks.remove(task)
+
     def mark_complete(self, task_id):
 
         update_command = "UPDATE todo SET status = 1 WHERE task_id = ?"
@@ -68,6 +73,11 @@ class TaskMaster:
         self.connection.commit()
         get_task_command = "SELECT content FROM todo WHERE task_id = ?"
         self.cursor.execute(get_task_command, (task_id,))
-        task_content = self.cursor.fetchall()
+        task_content = self.cursor.fetchone()
 
         print(f"Marked task: {task_content} as complete!")
+
+        #update list 
+        for task in self.tasks:
+            if task.task_id == task_id:
+                task.task_status = 1

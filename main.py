@@ -20,11 +20,13 @@ from task_master import TaskMaster
 
 
 def main():
-            
+
+    database_path = "todo.db"
+    task_manager = TaskMaster(database_path)
+
     print("Welcome to the Task Manager Menu! \n")
     while True:
-        database_path = "todo.db"
-        task_manager = TaskMaster(database_path)
+
 
         print("""What would you like to do: \n
                 1: Add a task
@@ -40,19 +42,22 @@ def main():
             task_manager.add_task(description)
             print("Task Added Sucessfully!")
 
-        if user_input == '2':
+        elif user_input == '2':
             print("Displaying Tasks: ")
             task_manager.display_tasks()
 
-        if user_input == '3':
+        elif user_input == '3':
             print("Input the ID of the task you want to delete: \n")
             target_id = int(input())
             task_manager.delete_task(target_id)
         
-        if user_input == '4':
+        elif user_input == '4':
             print("Input the task ID you want to mark as complete")
             target_id = int(input())
             task_manager.mark_complete(target_id)
+
+        else:
+            print("Please input valid input\n")
 
 if __name__ == "__main__":
     main()
